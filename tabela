@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .App {
+      text-align: center;
+    }
+
+    .App-logo {
+      height: 40vmin;
+    }
+
+    .App-header {
+      background-color: #282c34;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
+    }
+
+    .App-link {
+      color: #09d3ac;
+    }
+
+    /* Custom CSS */
+    /* Bootstrap resets */
+     .form-check-label.ml-4 {
+      margin-left: 0 !important;
+    }
+
+     .list-group-item {
+      background-color: transparent !important;
+    }
+
+     .list-group-item {
+      padding: 0.2em 0.5em !important;
+    }
+
+     .row-content .col {
+      margin-left: 20%;
+      padding: 0 !important;
+      width: 80%;
+    }
+
+     .table-bordered {
+      margin-top: 0;
+    }
+
+     .table-bordered td,
+     .table-wrapper-2nd th {
+      border: 1px solid #A4AFB7;
+    }
+
+     .col-2 {
+      background-color: #f1f1f1;
+      min-height: 100vh;
+      padding-top: 15px;
+      position: fixed;
+      width: 20%;
+    }
+
+     .form-control {
+      background-color: transparent !important;
+    }
+
+     .form-control:hover,
+     .form-control:focus {
+      background-color: #fff !important;
+      outline-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+     input.form-control+div {
+      background-color: #fff;
+    }
+
+     .mt-5 {
+      margin-top: 0 !important;
+    }
+
+     .table {
+      margin-bottom: 0;
+    }
+
+     .table thead th {
+      vertical-align: middle;
+    }
+
+    /**/
+     .container-fluid {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+     .container-fluid.mt-5 .row .col {
+      margin-left: 32px;
+      overflow-x: scroll;
+      width: calc(100% - 32px);
+    }
+
+     .container-fluid.mt-5 .row .col .row .col {
+      margin-left: 0;
+      width: 100% !important;
+    }
+
+    /**/
+     tr:nth-child(2n) {
+      background-color: rgba(234, 242, 255, 1);
+    }
+
+    /**/
+     input[type="checkbox"],
+     input[type="radio"] {
+      margin-right: 1em;
+    }
+
+     .rounded-circle {
+      border-radius: 0 !important;
+    }
+
+    /**/
+     .thead-wrapper {
+      z-index: 2;
+    }
+
+     .table-wrapper th {
+      text-align: center !important;
+    }
+
+    /**/
+     .col {
+      max-width: unset;
+      overflow-x: scroll;
+    }
+
+     .col-table {
+      position: relative;
+      max-height: 630px;
+      z-index: 3;
+    }
+
+     .month-container {
+      height: 100px;
+      position: relative;
+    }
+
+     .month-table {
+      left: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+    }
+
+     .table-wrapper {
+      align-items: center;
+      display: flex;
+      height: 100px;
+      justify-content: center;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+    }
+
+     .table-wrapper th:nth-child(2) {
+      width: 480px;
+    }
+
+     .table-wrapper-2nd {
+      top: 100px;
+      z-index: 1;
+    }
+
+     .table-wrapper-2nd th:first-child {
+      background-color: #fff !important;
+      min-width: 240px !important;
+    }
+
+    tr.table-wrapper-2nd th:last-child {
+      display: none;
+    }
+
+    /**/
+     .table-wrapper-2nd th {
+      background-color: rgba(234, 242, 255, 1) !important;
+      height: 62px;
+      min-width: 62px;
+      position: sticky;
+      top: 0;
+      z-index: 3;
+    }
+
+     .double-number {
+      text-align: center;
+    }
+
+     .table td {
+      height: 62px;
+      min-width: 62px;
+      padding: 0 !important;
+      position: relative;
+      vertical-align: bottom;
+    }
+
+     .rounded-circle {
+      border-radius: 0 !important;
+    }
+
+     td:first-child {
+      box-sizing: border-box;
+      font-size: 16px;
+      max-width: 240px;
+      min-width: 240px;
+      overflow: hidden;
+      padding: 0.75em;
+      word-break: break-all;
+    }
+
+    /* The form-check-label */
+     .form-check-label {
+      cursor: pointer;
+      display: block;
+      position: relative;
+      padding-left: 24px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+     .table-check-label {
+      cursor: pointer;
+      display: block;
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 24px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 2em;
+    }
+
+    /* Create a custom checkbox */
+     .checkmark {
+      height: 25px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 25px;
+    }
+
+    /* Unique color of checkboxes - checked & unchecked */
+     .events-categories .list-group li:first-child input:checked~.checkmark {
+      background-color: #007BFF !important;
+    }
+
+     .events-categories .list-group li:first-child .checkmark {
+      border-color: #007BFF !important;
+    }
+
+     .events-categories .list-group li:nth-child(2) input:checked~.checkmark {
+      background-color: #20BBA5 !important;
+    }
+
+     .events-categories .list-group li:nth-child(2) .checkmark {
+      border-color: #20BBA5 !important;
+    }
+
+     .events-categories .list-group li:nth-child(3) input:checked~.checkmark {
+      background-color: #CC0099 !important;
+    }
+
+     .events-categories .list-group li:nth-child(3) .checkmark {
+      border-color: #CC0099 !important;
+    }
+
+     .events-categories .list-group li:nth-child(4) input:checked~.checkmark {
+      background-color: #330099 !important;
+    }
+
+     .events-categories .list-group li:nth-child(4) .checkmark {
+      border-color: #330099 !important;
+    }
+
+     .events-categories .list-group li:nth-child(5) input:checked~.checkmark {
+      background-color: #FFBB00 !important;
+    }
+
+     .events-categories .list-group li:nth-child(5) .checkmark {
+      border-color: #FFBB00 !important;
+    }
+
+     .groups-categories .list-group .list-group-item input:checked~.checkmark {
+      background-color: #A4AFB7;
+    }
+
+     .groups-categories .list-group .list-group-item .checkmark {
+      border: 2px solid #A4AFB7 !important;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+     .checkmark:after {
+      content: "";
+      display: none;
+      position: absolute;
+    }
+
+    /* Hide the browser's default checkbox */
+     .form-check-label input,
+     .table-check-label input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    /* On mouse-over, add a grey background color */
+     .form-check-label input~.checkmark {
+      background-color: #fff;
+      border: 2px solid #007BFF;
+      border-radius: 4px;
+      box-sizing: border-box;
+      height: 12px;
+      margin: 6px 0 0 0;
+      width: 12px;
+    }
+
+     .table-check-label input~.checkmark {
+      background-color: #A4AFB7;
+      border: 2px solid #A4AFB7;
+      border-radius: 4px;
+      box-sizing: border-box;
+      height: 12px;
+      margin: 6px 0 0 0;
+      width: 12px;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+     .form-check-label input:checked~.checkmark {
+      background-color: #2196F3;
+    }
+
+    /**/
+     .row-content {
+      display: flex;
+    }
+
+    /**/
+     button.list-group-item-action {
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 16px;
+      padding-bottom: 0.5em !important;
+      padding-top: 1em !important;
+      text-indent: 24px;
+    }
+
+     button.list-group-item-action:focus {
+      outline-color: transparent;
+    }
+
+     .checkmark-description {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    /*Weekend*/
+     .text-center.saturday,
+     .double-number.saturday {
+      background-color: rgba(230, 238, 243, 1) !important;
+    }
+
+     .text-center.sunday,
+     .double-number.sunday {
+      background-color: rgba(210, 227, 239, 1) !important;
+    }
+
+     .saturday {
+      background-color: rgba(230, 238, 243, 0.5);
+    }
+
+     .sunday {
+      background-color: rgba(210, 227, 239, 0.5);
+    }
+
+    /* Tooltipy */
+     .__react_component_tooltip {
+      background-color: #52575d;
+      font-size: 16px;
+    }
+
+     .__react_component_tooltip a {
+      color: #fff;
+    }
+
+    /* Modal window */
+     .custom-modal {
+      z-index: 10;
+    }
+
+     .modal-main {
+      background-color: #52575D !important;
+      width: auto !important;
+    }
+
+     .modal-main .col-3 {
+      flex: 0 0 100% !important;
+      max-width: none;
+      padding: 1em;
+      background-color: transparent;
+    }
+
+     .modal-main button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #f00;
+      width: 4em;
+      height: 2em;
+      color: #fff;
+    }
+
+     .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #52575D !important;
+      background-clip: border-box;
+      color: #fff;
+    }
+
+     .card-body {
+      flex: 1 1 auto;
+      padding: 1rem 0.5rem 0.5rem 0.5rem !important;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+     .card .list-group-flush a {
+      color: inherit;
+    }
+    table {
+    }
+    tr, thead, td {
+    }
+  </style>
+</head>
+
+<body>
+  <table class="table table-bordered">
+    <thead class="thead-wrapper">
+      <tr class="table-wrapper-2nd">
+        <th></th>
+        <th class="text-center" scope="col">1</th>
+        <th class="text-center" scope="col">2</th>
+        <th class="text-center" scope="col">3</th>
+        <th class="text-center" scope="col">4</th>
+        <th class="text-center" scope="col">5</th>
+        <th class="text-center saturday" scope="col">6</th>
+        <th class="text-center sunday" scope="col">7</th>
+        <th class="text-center" scope="col">8</th>
+        <th class="text-center" scope="col">9</th>
+        <th class="double-number" scope="col">10</th>
+        <th class="double-number" scope="col">11</th>
+        <th class="double-number" scope="col">12</th>
+        <th class="double-number saturday" scope="col">13</th>
+        <th class="double-number sunday" scope="col">14</th>
+        <th class="double-number" scope="col">15</th>
+        <th class="double-number" scope="col">16</th>
+        <th class="double-number" scope="col">17</th>
+        <th class="double-number" scope="col">18</th>
+        <th class="double-number" scope="col">19</th>
+        <th class="double-number saturday" scope="col">20</th>
+        <th class="double-number sunday" scope="col">21</th>
+        <th class="double-number" scope="col">22</th>
+        <th class="double-number" scope="col">23</th>
+        <th class="double-number" scope="col">24</th>
+        <th class="double-number" scope="col">25</th>
+        <th class="double-number" scope="col">26</th>
+        <th class="double-number saturday" scope="col">27</th>
+        <th class="double-number sunday" scope="col">28</th>
+        <th class="double-number" scope="col">29</th>
+        <th class="double-number" scope="col">30</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <label class="table-check-label"><input id="6e995f56-a392-48ff-9762-3be905ff890d" type="checkbox"
+              checked="">Bogumil<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="2da2dad4-04da-4cdc-b2c8-6b57bde95cee" type="checkbox"
+              checked="">Lukasz<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="3376634d-5c5b-4dcc-9b48-d42016e19a3a" type="checkbox"
+              checked="">Mateusz<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="8240503b-2151-4a5e-964c-900ae2b2db7a" type="checkbox"
+              checked="">Adam<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="2ea29e73-7f83-46d1-be15-08ba17173262" type="checkbox"
+              checked="">Pawel<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="f826932c-da73-4dfc-a97b-7bdfb79a1ff3" type="checkbox"
+              checked="">Kamil<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="8a24d15c-8792-40a1-80d1-1cc83bb2eddf" type="checkbox"
+              checked="">Karol<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="1a7e4cc2-2a4b-4bc0-8c7f-791505deba29" type="checkbox"
+              checked="">Justyna<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="d7cc3c65-cbbc-411f-b61f-71339039f5a0" type="checkbox"
+              checked="">Michał<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+      <tr>
+        <td> <label class="table-check-label"><input id="4a094f06-9378-4339-a67a-8a5d30faf41e" type="checkbox"
+              checked="">Barbara<span class="checkmark"></span></label></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=" saturday"></td>
+        <td class=" sunday"></td>
+        <td class=""></td>
+        <td class=""></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>
